@@ -12,23 +12,29 @@ module CoreMIDI
   end
 
   class Packet
+    # http://www.srm.com/qtma/davidsmidispec.html
     def self.parse(data)
-      klass = {
-        Constants::NOTE_ON          => lambda {|data| (data[Events::NoteOn.members.index("velocity")] == 0) ? Events::NoteOff : Events::NoteOn },
-        Constants::NOTE_OFF         => Events::NoteOff,
-        Constants::KEY_PRESSURE     => Events::KeyPressure,
-        Constants::PROGRAM_CHANGE   => Events::ProgramChange,
-        Constants::CHANNEL_PRESSURE => Events::ChannelPressure
-      }.detect {|constant, klass|
-        data[0] & Constants::TYPE == constant 
+      spec = {
+        0x80 => Events::NoteOff,
+        0x90 => lambda {|data| (data[Events::NoteOn.members.index("velocity")] == 0) ? Events::NoteOff : Events::NoteOn },
+        0xA0 => Events::KeyPressure,
+        0xC0 => Events::ProgramChange,
+        0xD0 => Events::ChannelPressure
+      }
+      
+      klass = spec.detect {|code, _|
+        data[0] & 0xF0 == code # First byte is the type code
       }
 
       return Events::Unknown.new(data) if klass.nil?
 
       klass = klass.last
-      klass = klass.call(data) if klass.respond_to?(:call)
+      klass = klass.call(data) if klass.respond_to?(:call) # Resolve any lambdas into a class
 
-      klass.new(data[0] & Constants::CHANNEL, *data[1..-1])
+      klass.new(
+        data[0] & 0x0F, # Second byte contains the channel
+        *data[1..-1]
+      )
     end
   end
 
