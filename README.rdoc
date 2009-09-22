@@ -6,5 +6,8 @@ with caution.
 
 == Installation
 
-  $ gem sources -a http://gems.github.com
-  $ sudo gem install xaviershay-rbcoremidi
+	$ cd ext
+	$ ruby extconf.rb
+	$ make
+	$ cd ..
+	$ rake install

@@ -29,6 +29,8 @@ describe 'CoreMIDI::Packet.parse' do
   it_parses([0xA1, 0x3C, 0xFF], CoreMIDI::Events::KeyPressure.new(0x01, 0x3C, 0xFF)) # Channel 1, Middle C, full pressure
   it_parses([0xD0, 0x64], CoreMIDI::Events::ChannelPressure.new(0x00, 0x64)) # Channel 0, half pressure
   it_parses([0xD1, 0xFF], CoreMIDI::Events::ChannelPressure.new(0x01, 0xFF)) # Channel 1, full pressure
+  it_parses([0xB0, 0x28, 0x00], CoreMIDI::Events::ControllerChange.new(0x00, 0x28, 0x00)) # Channel 0, Controller 40, Value 0
+  it_parses([0xB1, 0x28, 0x64], CoreMIDI::Events::ControllerChange.new(0x01, 0x28, 0x64)) # Channel 1, Controller 40, Value 100
 
   # This is technically a NoteOn event, but convention uses it most often in place of a note off event (setting velocity to 0)
   it_parses([0x90, 0x3C, 0x00], CoreMIDI::Events::NoteOff.new(0x00, 0x3C, 0x00))  # Channel 0, Middle C, no velocity

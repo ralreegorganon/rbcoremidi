@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../ext/rbcoremidi.bundle'
-require 'coremidi/constants'
 
 module CoreMIDI
   module API
@@ -19,7 +18,8 @@ module CoreMIDI
         0x90 => lambda {|data| (data[Events::NoteOn.members.index("velocity")] == 0) ? Events::NoteOff : Events::NoteOn },
         0xA0 => Events::KeyPressure,
         0xC0 => Events::ProgramChange,
-        0xD0 => Events::ChannelPressure
+        0xD0 => Events::ChannelPressure,
+        0xB0 => Events::ControllerChange
       }
       
       klass = spec.detect {|code, _|
@@ -39,12 +39,13 @@ module CoreMIDI
   end
 
   module Events
-    class NoteOn          < Struct.new(:channel, :pitch, :velocity); end;
-    class NoteOff         < Struct.new(:channel, :pitch, :velocity); end;
-    class KeyPressure     < Struct.new(:channel, :pitch, :pressure); end;
-    class ProgramChange   < Struct.new(:channel, :preset);           end; 
-    class ChannelPressure < Struct.new(:channel, :pressure);       end; 
-    class Unknown         < Struct.new(:data);                       end;
+    class NoteOn           < Struct.new(:channel, :pitch, :velocity);   end;
+    class NoteOff          < Struct.new(:channel, :pitch, :velocity);   end;
+    class KeyPressure      < Struct.new(:channel, :pitch, :pressure);   end;
+    class ProgramChange    < Struct.new(:channel, :preset);             end; 
+    class ChannelPressure  < Struct.new(:channel, :pressure);           end; 
+    class ControllerChange < Struct.new(:channel, :controller, :value); end;
+    class Unknown          < Struct.new(:data);                         end;
   end
 
   class Input
