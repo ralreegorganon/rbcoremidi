@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../ext/rbcoremidi.bundle'
-require 'coremidi/constants'
 
 module CoreMIDI
   module API
