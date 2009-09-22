@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{rbcoremidi}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Xavier Shay"]
-  s.date = %q{2008-10-20}
+  s.date = %q{2009-09-22}
   s.description = %q{A gem that provides MIDI in to ruby via OSX CoreMIDI}
   s.email = %q{contact@rhnh.net}
   s.extensions = ["ext/extconf.rb"]
