@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email = %q{contact@rhnh.net}
   s.extensions = ["ext/extconf.rb"]
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
-  s.files = ["LICENSE", "README.rdoc", "Rakefile", "examples/example.rb", "ext/extconf.rb", "ext/rbcoremidi.c", "lib/coremidi", "lib/coremidi/constants.rb", "lib/coremidi.rb", "spec/parsing_spec.rb", "spec/spec_helper.rb"]
+  s.files = ["LICENSE", "README.rdoc", "Rakefile", "examples/example.rb", "ext/extconf.rb", "ext/rbcoremidi.c", "lib/coremidi.rb", "spec/parsing_spec.rb", "spec/spec_helper.rb"]
   s.has_rdoc = false
   s.homepage = %q{http://github.com/xaviershay/rbcoremidi}
   s.require_paths = ["lib"]
